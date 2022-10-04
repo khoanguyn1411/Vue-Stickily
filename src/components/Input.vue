@@ -1,8 +1,8 @@
 <template>
   <input
     class="border border-gray-400 outline-none w-full p-2 rounded-sm"
-    v-bind:value="inputValue"
-    v-on:input="setInputValue"
+    :value="inputValue"
+    @input="setInputValue"
   />
 </template>
 

@@ -1,8 +1,5 @@
 <template>
-  <button
-    class="bg-primary flex hover:bg-primary-bolder transition-all duration-200 items-center py-3 px-5 rounded-lg text-white font-bold"
-    @click="onClick"
-  >
+  <button :class="[classNames, classInit]" @click="onClick">
     <slot />
     <icon
       v-if="postFixIcon"
@@ -16,8 +13,15 @@
 import Vue from "vue";
 export default Vue.extend({
   name: "ButtonView",
+  data() {
+    return {
+      classInit:
+        "bg-primary flex hover:bg-primary-bolder transition-all duration-200 items-center py-3 px-5 rounded-lg text-white font-bold",
+    };
+  },
   props: {
     postFixIcon: String,
+    classNames: String,
   },
   methods: {
     onClick() {

@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <div class="flex items-center min-h-[320px] px-3 justify-center h-screen">
     <div
@@ -6,13 +5,30 @@
     >
       <h1 class="text-xl text-primary font-bold uppercase">{{ APP_NAME }}</h1>
       <div class="mt-3 flex space-x-1">
-        <Input placeholder="Add your new todo" v-model="todoValue" />
+        <Input
+          placeholder="Add your new todo"
+          v-model="todoValue"
+          :inputValue="todoValue"
+        />
         <Button class="rounded-sm" @click="handleAddNewTodo">
           <icon icon="fas fa-plus" />
         </Button>
       </div>
+      <div class="flex my-3">
+        <button
+          class="flex-1 p-2"
+          v-for="(status, index) in APP_TASK_STATUS"
+          :key="index"
+          :class="{
+            ['bg-primary text-white font-semibold']: status === activeStatus,
+          }"
+          @click="handleChangeActiveStatus(status)"
+        >
+          {{ status }}
+        </button>
+      </div>
       <div>
-        <h1 v-for="item in todoList">{{ item.name }}</h1>
+        <Task v-for="(item, index) in todoList" :key="index" :task="item" />
       </div>
     </div>
   </div>
@@ -21,26 +37,48 @@
 <script lang="ts">
 import Button from "@/components/Button.vue";
 import Input from "@/components/Input.vue";
-import { APP_NAME } from "@/constants";
+import { APP_NAME, APP_TASK_STATUS } from "@/constants";
+import { TaskStatus } from "@/types";
 import Vue from "vue";
 import { mapActions, mapGetters } from "vuex";
+import Task from "../components/Task.vue";
 
 export default Vue.extend({
   data() {
     return {
       APP_NAME,
+      APP_TASK_STATUS,
       todoValue: "",
+      activeStatus: TaskStatus.All,
     };
   },
   name: "TodoView",
-  components: { Input, Button },
+  components: { Input, Button, Task },
   computed: {
-    ...mapGetters({ todoList: "todoList" }),
+    ...mapGetters({ todoList: "todoListFiltered" }),
   },
   methods: {
-    ...mapActions({ addNewTodo: "addNewTodo" }),
+    ...mapActions({
+      addNewTodo: "addNewTodo",
+      filterTodoListBy: "filterTodoListBy",
+    }),
+    handleChangeActiveStatus(status: TaskStatus) {
+      this.activeStatus = status;
+      this.filterTodoListBy(status);
+    },
     handleAddNewTodo() {
-      this.addNewTodo({ name: this.todoValue, status: "todo" });
+      if (!this.todoValue.trim()) {
+        return;
+      }
+      this.addNewTodo({ name: this.todoValue, status: TaskStatus.Todo });
+    },
+    clearInputValue() {
+      this.todoValue = "";
+    },
+  },
+  watch: {
+    todoList() {
+      this.clearInputValue();
     },
   },
 });
