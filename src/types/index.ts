@@ -4,3 +4,9 @@ export enum TaskStatus {
   Done = "Done",
   Cancel = "Cancel",
 }
+
+export interface Todo {
+  readonly name: string;
+  readonly id: number;
+  readonly status: Omit<TaskStatus, TaskStatus.All>;
+}

@@ -7,7 +7,10 @@
       <Button classNames="bg-red-400 px-0 py-0 w-8 h-8 flex justify-center">
         <icon :icon="iconTask.firstButton" />
       </Button>
-      <Button classNames="bg-red-400 px-0 py-0 w-8 h-8 flex justify-center">
+      <Button
+        @click="handleSecondAction(iconTask.secondButton)"
+        classNames="bg-red-400 px-0 py-0 w-8 h-8 flex justify-center"
+      >
         <icon :icon="iconTask.secondButton" />
       </Button>
     </div>
@@ -15,9 +18,9 @@
 </template>
 
 <script lang="ts">
-import { Todo } from "@/store/todo";
-import { TaskStatus } from "@/types";
+import { TaskStatus, Todo } from "@/types";
 import Vue from "vue";
+import { mapActions } from "vuex";
 import Button from "./Button.vue";
 
 interface IconButton {
@@ -48,6 +51,18 @@ export default Vue.extend({
         firstButton: ButtonAction.Delete,
         secondButton: ButtonAction.Complete,
       };
+    },
+  },
+  methods: {
+    ...mapActions({ changeTaskStatusTo: "changeTaskStatusTo" }),
+    handleSecondAction(status: ButtonAction | undefined) {
+      if (!status) {
+        return;
+      }
+      if (status === ButtonAction.Complete) {
+        this.changeTaskStatusTo({ status: TaskStatus.Done, task: this.task });
+        return;
+      }
     },
   },
 });

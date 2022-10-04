@@ -60,17 +60,21 @@ export default Vue.extend({
   methods: {
     ...mapActions({
       addNewTodo: "addNewTodo",
-      filterTodoListBy: "filterTodoListBy",
+      changeStatusTo: "changeStatusTo",
     }),
     handleChangeActiveStatus(status: TaskStatus) {
       this.activeStatus = status;
-      this.filterTodoListBy(status);
+      this.changeStatusTo(status);
     },
     handleAddNewTodo() {
       if (!this.todoValue.trim()) {
         return;
       }
-      this.addNewTodo({ name: this.todoValue, status: TaskStatus.Todo });
+      this.addNewTodo({
+        id: Math.random(),
+        name: this.todoValue,
+        status: TaskStatus.Todo,
+      });
     },
     clearInputValue() {
       this.todoValue = "";
