@@ -1,31 +1,33 @@
 <template>
   <div class="flex items-center min-h-[320px] px-3 justify-center h-screen">
     <div
-      class="h-4/5 rounded-md px-3 py-2 overflow-auto min-h-[300px] shadow-lg border w-[450px]"
+      class="h-4/5 rounded-md px-3 py-2 overflow-auto min-h-[300px] shadow-lg border w-[500px]"
     >
-      <h1 class="text-xl text-primary font-bold uppercase">{{ APP_NAME }}</h1>
-      <div class="mt-3 flex space-x-1">
-        <Input
-          placeholder="Add your new todo"
-          v-model="todoValue"
-          :inputValue="todoValue"
-        />
-        <Button class="rounded-sm" @click="handleAddNewTodo">
-          <icon icon="fas fa-plus" />
-        </Button>
-      </div>
-      <div class="flex my-3">
-        <button
-          class="flex-1 p-2"
-          v-for="(status, index) in APP_TASK_STATUS"
-          :key="index"
-          :class="{
-            ['bg-primary text-white font-semibold']: status === activeStatus,
-          }"
-          @click="handleChangeActiveStatus(status)"
-        >
-          {{ status }}
-        </button>
+      <div class="sticky top-0 bg-white pb-2 z-10">
+        <h1 class="text-xl text-primary font-bold uppercase">{{ APP_NAME }}</h1>
+        <div class="mt-3 flex space-x-1">
+          <Input
+            placeholder="Add your new todo"
+            v-model="todoValue"
+            :inputValue="todoValue"
+          />
+          <Button class="rounded-sm" @click="handleAddNewTodo">
+            <icon icon="fas fa-plus" />
+          </Button>
+        </div>
+        <div class="flex my-3">
+          <button
+            class="flex-1 p-2"
+            v-for="(status, index) in APP_TASK_STATUS"
+            :key="index"
+            :class="{
+              ['bg-primary text-white font-semibold']: status === activeStatus,
+            }"
+            @click="handleChangeActiveStatus(status)"
+          >
+            {{ status }}
+          </button>
+        </div>
       </div>
       <div>
         <Task v-for="(item, index) in todoList" :key="index" :task="item" />

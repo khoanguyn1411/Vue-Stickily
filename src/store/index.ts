@@ -14,19 +14,23 @@ interface State {
 const todoStorage = TodoStorage();
 const filterListByStatus = (state: State, status: TaskStatus): void => {
   if (status === TaskStatus.All) {
-    state.todoListFiltered = state.todoList;
+    state.todoListFiltered = state.todoList.filter(
+      (item) => item.status !== TaskStatus.Cancel
+    );
     return;
   }
   state.todoListFiltered = state.todoList.filter(
     (item) => item.status === status
   );
 };
-
+const initialTodoList = todoStorage.getList();
 const store: StoreOptions<State> = {
   state: {
     status: TaskStatus.All,
-    todoList: todoStorage.getList() ?? [],
-    todoListFiltered: todoStorage.getList() ?? [],
+    todoList: initialTodoList ?? [],
+    todoListFiltered: initialTodoList
+      ? initialTodoList.filter((item) => item.status !== TaskStatus.Cancel)
+      : [],
   },
   getters: {
     status: (state) => state.status,
