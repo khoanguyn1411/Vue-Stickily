@@ -1,4 +1,4 @@
-# This is Stickily - An taking note website.
+# This is Stickily - A taking note website.
 
 ## Techniques:
 
