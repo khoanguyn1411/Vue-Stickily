@@ -5,12 +5,14 @@ export enum TaskStatus {
   Cancel = "Cancel",
 }
 
-export function getObjectTaskStatus(): { [key in TaskStatus]: TaskStatus } {
+export function getObjectTaskStatus(): {
+  [key in keyof typeof TaskStatus]: TaskStatus;
+} {
   let task = {};
-  Object.entries(TaskStatus).forEach(([value, key]) => {
+  Object.entries(TaskStatus).forEach(([key, value]) => {
     task = { ...task, [key]: value };
   });
-  return task as { [key in TaskStatus]: TaskStatus };
+  return task as { [key in keyof typeof TaskStatus]: TaskStatus };
 }
 
 export interface Todo {

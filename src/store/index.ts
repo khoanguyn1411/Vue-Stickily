@@ -36,6 +36,8 @@ const store: StoreOptions<State> = {
     status: (state) => state.status,
     todoList: (state) => state.todoList,
     todoListFiltered: (state) => state.todoListFiltered,
+    allTasksCount: (state) =>
+      state.todoList.filter((item) => item.status !== TaskStatus.Cancel).length,
   },
   mutations: {
     addNewTodo(state, payload: Todo) {
