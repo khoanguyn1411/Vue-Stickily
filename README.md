@@ -1,24 +1,13 @@
-# todos-vuejs
+# This is Stickily - An taking note website.
 
-## Project setup
-```
-yarn install
-```
+## Techniques:
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+- Framework: VueJS 2.
+- Language: Typescript.
+- Data management: VueX.
+- Data storage: Local storage.
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## Features:
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Take note.
+- Update task (change task status).
